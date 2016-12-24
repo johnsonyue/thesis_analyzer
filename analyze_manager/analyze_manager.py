@@ -131,4 +131,4 @@ def on_notify(log_file_name, state_file_name, type, args):
 	
 	return str;
 
-update_state_file("files/state" , is_init = True)
+#update_state_file("files/state" , is_init = True)
