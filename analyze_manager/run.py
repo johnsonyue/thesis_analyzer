@@ -19,7 +19,7 @@ def main(argv):
 	type = argv[2];
 	
 	valid_source = ["caida", "iplane"];
-	if not source in valid_source:
+	if not source.split('_')[0] in valid_source:
 		usage();
 		exit();
 	
