@@ -39,9 +39,29 @@ def country_ip_thread(date, source, out_dir):
 	out_path = out_dir + "/" + date
 	if not os.path.exists(out_path):
 		os.makedirs(out_path)
+	f=open("%s/%s.graph" % (out_path, date), 'r')
+	cnt = f.readline().split(' ')[0]
+	f.close()
 
-	os.system( 'bash -c "cnt=`cat %s.graph | tail -n +1 | head -1 | awk \'{print $1}\'`; echo $cnt; cat %s.graph | tail -n +2 | python country_ip.py" > %s/%s.geo' % (out_path+"/"+date, out_path+"/"+date, out_path, date) )
-	print ( 'bash -c "cnt=`cat %s.graph | tail -n +1 | head -1 | awk \'{print $1}\'`; echo $cnt; cat %s.graph | tail -n +2 | python country_ip.py" > %s/%s.geo' % (out_path+"/"+date, out_path+"/"+date, out_path, date) )
+	os.system( 'bash -c "cat %s.graph | tail -n +2 | head -n %s | python country_ip.py" > %s/%s.geo' % (out_path+"/"+date, cnt, out_path, date) )
+	print ( 'bash -c "cat %s.graph | tail -n +2 | head -n %s | python country_ip.py" > %s/%s.geo' % (out_path+"/"+date, cnt, out_path, date) )
+
+	end_time = time.time();
+	time_used = end_time - start_time;
+	print handler.notify_finished(date, time_used, data_source+"_country_ip");
+	sys.stdout.flush()
+
+def extract_tr_thread(date, source, out_dir):
+	start_time = time.time();
+	print handler.notify_started(date,data_source+"_country_ip");
+	sys.stdout.flush()
+
+	out_path = out_dir + "/" + date
+	if not os.path.exists(out_path):
+		os.makedirs(out_path)
+
+	os.system()
+	print ()
 
 	end_time = time.time();
 	time_used = end_time - start_time;
@@ -93,6 +113,10 @@ def main(argv):
 			th.start()
 		elif (op_type == "country_ip"):
 			th = threading.Thread( target=country_ip_thread, args=(date, data_source, out_dir, ) )
+			th_pool.append(th)
+			th.start()
+		elif (op_type == "extract_tr"):
+			th = threading.Thread( target=extrace_tr_thread, args=(date, data_source, out_dir, ) )
 			th_pool.append(th)
 			th.start()
 		

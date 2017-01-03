@@ -9,9 +9,13 @@ num_node = 0
 		
 def parse_trace():
 	try:
+		cnt = 0
+		node = ""
 		while True:
 			line = raw_input()
 			if line.split('\t')[0] == "!!":
+				cnt = 0
+				node = line.split('\t')[2]
 				continue
 			prev_node = -1
 			global num_node

@@ -27,6 +27,8 @@ def build_caida():
 			return
 
 def output_iplane_trace(target_ip, trace_list):
+	if len(trace_list) == 0:
+		return
 	if target_ip == trace_list[-1]:
 		is_replied = "R"
 	else:
